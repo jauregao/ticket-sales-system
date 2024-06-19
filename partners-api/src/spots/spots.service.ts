@@ -14,6 +14,14 @@ export class SpotsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(eventId: string, createSpotDto: CreateSpotDto) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     const existingSpot = await this.prismaService.spot.findFirst({
       where: {
         eventId,
@@ -38,6 +46,14 @@ export class SpotsService {
     eventId: string,
     createMultipleSpotsDto: CreateMultipleSpotsDto,
   ) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     const spotNames = generateSpotNames(createMultipleSpotsDto.numberOfSpots);
 
     const existingSpots = await this.prismaService.spot.findMany({
@@ -67,6 +83,14 @@ export class SpotsService {
   }
 
   async findAll(eventId: string) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     const spots = await this.prismaService.spot.findMany({
       where: { eventId },
     });
@@ -74,7 +98,15 @@ export class SpotsService {
     return spots.sort((a, b) => customSort(a.name, b.name));
   }
 
-  findOne(spotId: string, eventId: string) {
+  async findOne(spotId: string, eventId: string) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     return this.prismaService.spot.findFirst({
       where: {
         id: spotId,
@@ -84,6 +116,14 @@ export class SpotsService {
   }
 
   async reserveSpot(spotId: string, eventId: string) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     const spot = await this.prismaService.spot.findFirst({
       where: {
         id: spotId,
@@ -106,7 +146,15 @@ export class SpotsService {
     });
   }
 
-  update(spotId: string, eventId: string, updateSpotDto: UpdateSpotDto) {
+  async update(spotId: string, eventId: string, updateSpotDto: UpdateSpotDto) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
+
     return this.prismaService.spot.update({
       where: {
         eventId,
@@ -116,7 +164,14 @@ export class SpotsService {
     });
   }
 
-  remove(spotId: string, eventId: string) {
+  async remove(spotId: string, eventId: string) {
+    const event = await this.prismaService.event.findFirst({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new BadRequestException('Event does not exist.');
+    }
     return this.prismaService.spot.delete({
       where: {
         id: spotId,
