@@ -107,7 +107,7 @@ export class EventsService {
         );
 
         return tickets;
-      });
+      }, {isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted});
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         switch (e.code) {

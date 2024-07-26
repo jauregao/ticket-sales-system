@@ -42,7 +42,7 @@ export class EventsController {
   }
 
   @Post(':id/reserve')
-  reserveSpot(@Body() reserveSpotDto: ReserveSpotDto, @Param('id') id: string) {
-    return this.eventsService.reserveSpot({ ...reserveSpotDto, eventId: id });
+  reserveSpot(@Body() reserveSpotDto: ReserveSpotDto, @Param('id') eventId: string) {
+    return this.eventsService.reserveSpot({ ...reserveSpotDto, eventId });
   }
 }
