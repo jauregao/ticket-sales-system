@@ -23,7 +23,7 @@ export class EventsController {
   create(@Body() createEventRequest: CreateEventRequest) {
     return this.eventsService.create(createEventRequest);
   }
-  
+
   @Get()
   findAll() {
     return this.eventsService.findAll();

@@ -7,25 +7,25 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
-import { SpotsService } from './spots.service';
-import { UpdateSpotDto } from './dto/update-spot.dto';
-import { CreateMultipleSpotsDto } from './dto/create-multiple-spots.dto';
+import { SpotsService } from '@app/core/spots/spots.service';
+import { UpdateSpotRequest } from './request/update-spot.request';
+import { CreateMultipleSpotsRequest } from './request/create-multiple-spots.request';
 
 @Controller('events/:eventId/spots')
 export class SpotsController {
   constructor(private readonly spotsService: SpotsService) {}
 
   @Post()
-  create(@Param('eventId') eventId: string, @Body() createSpotDto) {
-    return this.spotsService.create(eventId, createSpotDto);
+  create(@Param('eventId') eventId: string, @Body() createSpotRequest) {
+    return this.spotsService.create(eventId, createSpotRequest);
   }
 
   @Post('multiple')
   createMultipleSpots(
     @Param('eventId') eventId: string,
-    @Body() createMultipleSpotsDto: CreateMultipleSpotsDto,
+    @Body() createMultipleSpotsRequest: CreateMultipleSpotsRequest,
   ) {
-    return this.spotsService.createMultiple(eventId, createMultipleSpotsDto);
+    return this.spotsService.createMultiple(eventId, createMultipleSpotsRequest);
   }
 
   @Get()
@@ -42,9 +42,9 @@ export class SpotsController {
   update(
     @Param('spotId') spotId: string,
     @Param('eventId') eventId: string,
-    @Body() updateSpotDto: UpdateSpotDto,
+    @Body() updateSpotRequest: UpdateSpotRequest,
   ) {
-    return this.spotsService.update(spotId, eventId, updateSpotDto);
+    return this.spotsService.update(spotId, eventId, updateSpotRequest);
   }
 
   @Delete(':spotId')
