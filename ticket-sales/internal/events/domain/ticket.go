@@ -7,10 +7,10 @@ const (
 	TicketTypeFull TicketType = "full"
 )
 
-type Ticket struc {
-	ID 					string
-	EventID 		string
-	Spot 				*Spot //ponteiro, qualquer alteração feita reflete em todo o código
-	TicketType  TicketType
-	Price				float64
+type Ticket struct {
+	ID         string
+	EventID    string
+	Spot       *Spot //ponteiro, qualquer alteração feita reflete em todo o código
+	TicketType TicketType
+	Price      float64
 }
